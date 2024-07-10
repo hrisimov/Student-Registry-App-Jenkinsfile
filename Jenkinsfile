@@ -21,8 +21,12 @@ pipeline {
         }
         stage('Sample stage') {
             steps {
-                echo "${BUILD_NUMBER}"
                 echo "$DOCKERHUB_CREDENTIALS_USR"
+            }
+        }
+        stage('Build Docker image') {
+            steps {
+                bat 'docker build -t hris96/student-registry-app-jenkinsfile:%BUILD_NUMBER% .'
             }
         }
     }
