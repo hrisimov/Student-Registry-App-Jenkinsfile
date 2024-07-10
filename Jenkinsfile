@@ -22,7 +22,7 @@ pipeline {
         stage('Sample stage') {
             steps {
                 echo "${BUILD_NUMBER}"
-                echo '${DOCKERHUB_CREDENTIALS_USR}'
+                echo '$DOCKERHUB_CREDENTIALS_USR'
             }
         }
     }
