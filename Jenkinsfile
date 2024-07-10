@@ -22,6 +22,7 @@ pipeline {
         stage('Sample stage') {
             steps {
                 echo "$DOCKERHUB_CREDENTIALS_USR"
+                echo "$DOCKERHUB_CREDENTIALS_PSW"
             }
         }
         stage('Build Docker image') {
