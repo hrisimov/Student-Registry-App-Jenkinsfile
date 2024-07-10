@@ -22,21 +22,25 @@ pipeline {
         stage('Sample stage') {
             steps {
                 echo "$DOCKERHUB_CREDENTIALS_USR"
-                echo "$DOCKERHUB_CREDENTIALS_PSW"
             }
         }
         stage('Build Docker image') {
             steps {
-                bat 'docker build -t hris96/student-registry-app-jenkinsfile:%BUILD_NUMBER% .'
+                bat 'docker build -t hris96/student-registry-app-jenkinsfile:$BUILD_NUMBER .'
             }
         }
         stage('Push image to DockerHub') {
             steps {
-                bat 'docker login --username $DOCKERHUB_CREDENTIALS_USR --password $DOCKERHUB_CREDENTIALS_PSW'
-                bat 'docker push hris96/student-registry-app-jenkinsfile:%BUILD_NUMBER%'
-                bat 'docker tag hris96/student-registry-app-jenkinsfile:%BUILD_NUMBER% hris96/student-registry-app-jenkinsfile:latest'
+                bat 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+                bat 'docker push hris96/student-registry-app-jenkinsfile:$BUILD_NUMBER'
+                bat 'docker tag hris96/student-registry-app-jenkinsfile:$BUILD_NUMBER hris96/student-registry-app-jenkinsfile:latest'
                 bat 'docker push hris96/student-registry-app-jenkinsfile:latest'
             }
+        }
+    }
+    post {
+        always {
+            bat 'docker logout'
         }
     }
 }
