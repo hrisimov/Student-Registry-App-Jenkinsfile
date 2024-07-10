@@ -26,10 +26,13 @@ pipeline {
         }
         stage('Push image to DockerHub') {
             steps {
-                bat 'docker login --username %DOCKERHUB_CREDENTIALS_USR% --password %DOCKERHUB_CREDENTIALS_PSW%'
-                bat 'docker push hris96/student-registry-app-jenkinsfile:%BUILD_NUMBER%'
-                bat 'docker tag hris96/student-registry-app-jenkinsfile:%BUILD_NUMBER% hris96/student-registry-app-jenkinsfile:latest'
-                bat 'docker push hris96/student-registry-app-jenkinsfile:latest'
+                script {
+                    input message: 'Approve pushing image to DockerHub?', ok: 'Push'
+                    bat 'docker login --username %DOCKERHUB_CREDENTIALS_USR% --password %DOCKERHUB_CREDENTIALS_PSW%'
+                    bat 'docker push hris96/student-registry-app-jenkinsfile:%BUILD_NUMBER%'
+                    bat 'docker tag hris96/student-registry-app-jenkinsfile:%BUILD_NUMBER% hris96/student-registry-app-jenkinsfile:latest'
+                    bat 'docker push hris96/student-registry-app-jenkinsfile:latest'
+                }
             }
         }
     }
