@@ -18,8 +18,8 @@ pipeline {
         }
         stage('Sample stage') {
             steps {
-                echo %BUILD_NUMBER%
-                echo %USERNAME%
+                echo "${BUILD_NUMBER}"
+                echo "${USERNAME}"
             }
         }
     }
