@@ -31,7 +31,7 @@ pipeline {
         }
         stage('Push image to DockerHub') {
             steps {
-                bat 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+                bat 'echo "$DOCKERHUB_CREDENTIALS_PSW" | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
                 bat 'docker push hris96/student-registry-app-jenkinsfile:%BUILD_NUMBER%'
                 bat 'docker tag hris96/student-registry-app-jenkinsfile:%BUILD_NUMBER% hris96/student-registry-app-jenkinsfile:latest'
                 bat 'docker push hris96/student-registry-app-jenkinsfile:latest'
