@@ -16,5 +16,11 @@ pipeline {
                 bat 'npm test'
             }
         }
+        stage('Sample stage') {
+            steps {
+                echo %BUILD_NUMBER%
+                echo %USERNAME%
+            }
+        }
     }
 }
