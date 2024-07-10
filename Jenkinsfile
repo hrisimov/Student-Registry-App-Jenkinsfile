@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    environment {
+        DOCKERHUB_CREDENTIALS = credentials('8c7552b9-e48a-44ca-ab3b-98d38d1bcc60')
+    }
     stages {
         stage('Install npm dependencies') {
             steps {
@@ -19,7 +22,7 @@ pipeline {
         stage('Sample stage') {
             steps {
                 echo "${BUILD_NUMBER}"
-                echo "${USERNAME}"
+                echo '${DOCKERHUB_CREDENTIALS_USR}'
             }
         }
     }
